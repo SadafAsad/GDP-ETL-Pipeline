@@ -24,3 +24,14 @@ def extract(url, table_attribs):
                 df1 = pd.DataFrame(data_dict, index=[0])
                 df = pd.concat([df,df1], ignore_index=True)
     return df
+
+def transform(df):
+    # converting gdp million currency to float billions and storing in a dataframe
+    GDP_list = df["GDP_USD_millions"].tolist()
+    GDP_list = [float("".join(x.split(','))) for x in GDP_list]
+    GDP_list = [np.round(x/1000,2) for x in GDP_list]
+    df["GDP_USD_millions"] = GDP_list
+    df=df.rename(columns = {"GDP_USD_millions":"GDP_USD_billions"})
+    return df
+
+
